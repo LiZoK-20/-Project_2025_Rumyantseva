@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <!--настройка масштабирования для мобильных устройств-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Классификатор ирисов</title>
+    <link rel="stylesheet" href="/static/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>🪻 Классификация ирисов Фишера</h1>
+      <p>Введите параметры цветка:</p>
+
+      <!--action="/predict" - отправка на адрес /predict-->
+      <!--method="post" - метод post для отправки данных на сервер-->
+      <form action="/predict" method="post">
+        <div class="form-group">
+          <label> Длина чашелистика (см):</label>
+          <input
+            type="number"
+            name="sepal_length" 
+            step="0.1"
+            value="{{ sepal_length or '' }}" 
+            placeholder="7.3"
+            required 
+          /> <!-- value - подстановка предыдущего значения из main.py-->
+        </div>
+        <div class="form-group">
+          <label> Ширина чашелистика (см):</label>
+          <input
+            type="number"
+            name="sepal_width"
+            step="0.1"
+            value="{{ sepal_width or '' }}"
+            placeholder="5.3"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label> Длина лепестка (см):</label>
+          <input
+            type="number"
+            name="petal_length"
+            step="0.1"
+            value="{{ petal_length or '' }}"
+            placeholder="0.7"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label> Ширина лепестка (см):</label>
+          <input
+            type="number"
+            name="petal_width"
+            step="0.1"
+            value="{{ petal_width or '' }}"
+            placeholder="2.4"
+            required
+          />
+        </div>
+        <button type="submit" class="btn"> Отправить</button>
+      </form>
+
+      {% if result %} <!--проверка: если переменная result существует (получена из main.py)-->
+      <div class="result"> <!--блок с результатом, класс для стилизации-->
+        <h2>{{ result }}</h2> <!--вывод результата предсказания-->
+      </div>
+      {% endif %} <!--конец условия-->
+    </div>
+  </body>
+</html>
+<!-- venv\Scripts\activate  - активация виртуального окружения
+uvicorn app.main:app --reload - запуск сервера -->
